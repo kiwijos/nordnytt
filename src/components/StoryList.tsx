@@ -14,19 +14,27 @@ const NUMBER_OF_STORIES_PER_LOAD = 10;
 export default function StoryList({ initialStories }: StoryListProps) {
   const [offset, setOffset] = useState(NUMBER_OF_STORIES_PER_LOAD);
   const [stories, setStories] = useState<Story[]>(initialStories);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [hasMoreStories, setHasMoreStories] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { ref, inView } = useInView()
 
   const loadMoreStories = async () => {
-    // setIsLoading(true);
+    if (isLoading || !hasMoreStories) return;
+
+    setIsLoading(true);
     try {
       const newStories = await getTopStories(offset, NUMBER_OF_STORIES_PER_LOAD);
+      
+      if (newStories.length < NUMBER_OF_STORIES_PER_LOAD) {
+        setHasMoreStories(false);
+      }
+
       setStories((prev) => [...prev, ...newStories]);
       setOffset((prev) => prev + NUMBER_OF_STORIES_PER_LOAD);
     } catch (error) {
       console.error("Error loading more stories:", error);
     } finally {
-      // setIsLoading(false);
+      setIsLoading(false);
     }
   }
 
@@ -46,7 +54,9 @@ export default function StoryList({ initialStories }: StoryListProps) {
         />
       ))}
       <div ref={ref}>
-        Laddar fler inlägg...
+        {!hasMoreStories 
+          ? "Inga fler inlägg att visa." 
+          : "Laddar fler inlägg..."}
       </div>
       {/*<button
         className="bg-slate-200 text-slate-600 p-2 text-sm rounded-md hover:bg-slate-300"
