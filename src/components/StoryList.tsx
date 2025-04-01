@@ -58,14 +58,6 @@ export default function StoryList({ initialStories }: StoryListProps) {
           ? "Inga fler inlägg att visa." 
           : "Laddar fler inlägg..."}
       </div>
-      {/*<button
-        className="bg-slate-200 text-slate-600 p-2 text-sm rounded-md hover:bg-slate-300"
-        onClick={loadMoreStories}
-        disabled={isLoading}
-        aria-busy={isLoading}
-      >
-        {isLoading ? "Laddar..." : "Ladda fler inlägg"}
-      </button>*/}
     </div>
   )
 }
