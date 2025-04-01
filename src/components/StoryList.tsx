@@ -46,7 +46,7 @@ export default function StoryList({ initialStories }: StoryListProps) {
         />
       ))}
       <div ref={ref}>
-        Laddar fler inklägg...
+        Laddar fler inlägg...
       </div>
       {/*<button
         className="bg-slate-200 text-slate-600 p-2 text-sm rounded-md hover:bg-slate-300"
